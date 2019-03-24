@@ -31,10 +31,14 @@ Run
 Find & click the green play arrow next to the main function in core.clj
 
 
-### Prereqs (in progress!)
+## Prereqs (in progress!)
 
 Not sure what you need just to run? But to develop
 
 1. JDK 8 or above (actually only tested with 11 - and not sure if you need JDK or just JRE)
 2. [Leiningen](https://leiningen.org/) the clojure build tool (this comes with the clojure compiler so it's the only thing you need to install) 
  I used [SDKMan](https://sdkman.io/) to install, `sdk install leiningen`
+
+## IDE
+
+Use IntelliJ IDEA with the [Cursive](https://cursive-ide.com/) plugin
