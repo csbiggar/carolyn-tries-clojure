@@ -32,6 +32,11 @@
   (format-unit-with-measure days "day")
   )
 
+(defn format-years
+  [years]
+  (format-unit-with-measure years "year")
+  )
+
 (def seconds-in-minute 60)
 (def minutes-in-hour 60)
 (def hours-in-day 24)
@@ -44,16 +49,19 @@
 (def minutes-in-day (* minutes-in-hour hours-in-day))
 (def minutes-in-year (* minutes-in-day days-in-year))
 
+(def hours-in-year (* hours-in-day days-in-year))
+
 (defn split-by-time-unit
   "Given seconds, split into an array of hours, minutes, seconds etc"
   [input-seconds]
   (let [
-        days (quot input-seconds seconds-in-day)
-        hours (- (quot input-seconds seconds-in-hour) (* days hours-in-day))
-        minutes (- (quot input-seconds seconds-in-minute) (+ (* hours minutes-in-hour) (* days minutes-in-day) ) )
+        years (quot input-seconds seconds-in-year)
+        days (- (quot input-seconds seconds-in-day) (* years days-in-year))
+        hours (- (quot input-seconds seconds-in-hour) (* days hours-in-day) (* years hours-in-year))
+        minutes (- (quot input-seconds seconds-in-minute) (+ (* hours minutes-in-hour) (* days minutes-in-day) (* years minutes-in-year)))
         seconds (rem input-seconds 60)
         ]
-    (remove clojure.string/blank? [ (format-days days) (format-hours hours) (format-minutes minutes) (format-seconds seconds)])
+    (remove clojure.string/blank? [(format-years years) (format-days days) (format-hours hours) (format-minutes minutes) (format-seconds seconds)])
     )
   )
 
