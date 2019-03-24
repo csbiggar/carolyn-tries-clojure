@@ -2,12 +2,13 @@
   (:gen-class))
 
 (defn format-unit-with-measure
-  "Given a quantity and a unit of measure, format it including accounting for the singular"
+  "Given a quantity and a unit of measure, format it accounting for the singular"
   [quantity unit]
 
-  (if (= quantity 1)
-    (str quantity " " unit)
-    (str quantity " " unit "s")
+  (cond
+    (= quantity 0) ""
+    (= quantity 1) (str quantity " " unit)
+    :else (str quantity " " unit "s")
     )
   )
 
@@ -26,22 +27,25 @@
   (format-unit-with-measure hours "hour")
   )
 
+(defn split-by-time-unit
+  "Given seconds, split into an array of hours, minutes, seconds etc"
+  [input-seconds]
+  (let [hours (quot input-seconds 3600)
+        minutes (- (quot input-seconds 60) (* hours 60))
+        seconds (rem input-seconds 60)
+        ]
+    (remove clojure.string/blank? [(format-hours hours) (format-minutes minutes) (format-seconds seconds)])
+    )
+  )
+
 (defn format-time
   "Format a time"
   [input-seconds]
-
-  (let [hours (quot input-seconds 3600)
-        minutes (- (quot input-seconds 60) (* hours 60))
-        seconds (rem input-seconds 60)        ]
-
+  (let [time-unit-components (split-by-time-unit input-seconds)]
     (cond
       (= input-seconds 0) "none"
-      (and (> hours 0) (= minutes 0) (= seconds 0) ) (format-hours hours)
-      (and (= hours 0) (= minutes 0) (> seconds 0)) (format-seconds seconds)
-      (and (= hours 0) (> minutes 0) (= seconds 0)) (format-minutes minutes)
-      (and (> hours 0) (= minutes 0) (> seconds 0)) (str (format-hours hours) " and " (format-seconds seconds))
-      (and (= hours 0) (> minutes 0) (> seconds 0)) (str (format-minutes minutes) " and " (format-seconds seconds))
-      :else (str (format-hours hours) ", " (format-minutes minutes) " and " (format-seconds seconds))
+      (= (count time-unit-components) 1) (first time-unit-components)
+      :else (str (str (clojure.string/join ", " (drop-last time-unit-components))) " and " (last time-unit-components))
       )
     )
   )
