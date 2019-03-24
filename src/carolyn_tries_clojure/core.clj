@@ -59,7 +59,7 @@
         days (- (quot input-seconds seconds-in-day) (* years days-in-year))
         hours (- (quot input-seconds seconds-in-hour) (* days hours-in-day) (* years hours-in-year))
         minutes (- (quot input-seconds seconds-in-minute) (* hours minutes-in-hour) (* days minutes-in-day) (* years minutes-in-year))
-        seconds (rem input-seconds 60)
+        seconds (rem input-seconds seconds-in-minute)
         ]
     (remove clojure.string/blank? [(format-years years) (format-days days) (format-hours hours) (format-minutes minutes) (format-seconds seconds)])
     )
