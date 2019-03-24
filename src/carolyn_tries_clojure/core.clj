@@ -21,17 +21,25 @@
   (format-unit-with-measure minutes "minute")
   )
 
+(defn format-hours
+  [hours]
+  (format-unit-with-measure hours "hour")
+  )
+
 (defn format-time
   "Format a time"
   [input-seconds]
 
-  (let [minutes (quot input-seconds 60) seconds (rem input-seconds 60)]
+  (let [hours (quot input-seconds 3600)
+        minutes (- (quot input-seconds 60) (* hours 60))
+        seconds (rem input-seconds 60)        ]
 
     (cond
       (= input-seconds 0) "none"
-      (<= minutes 0) (format-seconds seconds)
-      (<= seconds 0) (format-minutes minutes)
-      :else (str (format-minutes minutes) " and " (format-seconds seconds))
+      (= minutes 0) (format-seconds seconds)
+      (= seconds 0) (format-minutes minutes)
+      (= hours 0) (str (format-minutes minutes) " and " (format-seconds seconds))
+      :else (str (format-hours hours) ", " (format-minutes minutes) " and " (format-seconds seconds))
       )
     )
   )
