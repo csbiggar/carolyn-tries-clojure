@@ -10,8 +10,9 @@
 (defn format-time
   "Given a number of seconds, display as nice string"
   [seconds]
-  (if (= seconds 1)
-    (str seconds " second")
-    (str seconds " seconds")
+  (cond
+    (= seconds 0) "none"
+    (= seconds 1) (str seconds " second")
+    :else (str seconds " seconds")
     )
   )
