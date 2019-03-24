@@ -1,6 +1,20 @@
 (ns carolyn-tries-clojure.core
   (:gen-class))
 
+(def seconds-in-minute 60)
+(def minutes-in-hour 60)
+(def hours-in-day 24)
+(def days-in-year 365)
+
+(def seconds-in-hour (* seconds-in-minute minutes-in-hour))
+(def seconds-in-day (* seconds-in-hour hours-in-day))
+(def seconds-in-year (* seconds-in-day days-in-year))
+
+(def minutes-in-day (* minutes-in-hour hours-in-day))
+(def minutes-in-year (* minutes-in-day days-in-year))
+
+(def hours-in-year (* hours-in-day days-in-year))
+
 (defn format-unit-with-measure
   "Given a quantity and a unit of measure, format it accounting for the singular"
   [quantity unit]
@@ -36,20 +50,6 @@
   [years]
   (format-unit-with-measure years "year")
   )
-
-(def seconds-in-minute 60)
-(def minutes-in-hour 60)
-(def hours-in-day 24)
-(def days-in-year 365)
-
-(def seconds-in-hour (* seconds-in-minute minutes-in-hour))
-(def seconds-in-day (* seconds-in-hour hours-in-day))
-(def seconds-in-year (* seconds-in-day days-in-year))
-
-(def minutes-in-day (* minutes-in-hour hours-in-day))
-(def minutes-in-year (* minutes-in-day days-in-year))
-
-(def hours-in-year (* hours-in-day days-in-year))
 
 (defn split-by-time-unit
   "Given seconds, split into an array of hours, minutes, seconds etc"
