@@ -35,9 +35,8 @@
     (cond
       (= input-seconds 0) "none"
       (<= minutes 0) (format-seconds seconds)
+      (<= seconds 0) (format-minutes minutes)
       :else  (str (format-minutes minutes) " and " (format-seconds seconds))
       )
     )
-
-
   )

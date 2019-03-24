@@ -13,6 +13,8 @@
     (is (= (format-time 123) "2 minutes and 3 seconds")))
   (testing "should show 1 minute as singular"
     (is (= (format-time 70) "1 minute and 10 seconds")))
+  (testing "should omit seconds if a whole number of minutes"
+    (is (= (format-time 120) "2 minutes")))
   )
 
 (run-tests 'carolyn-tries-clojure.core-test)
