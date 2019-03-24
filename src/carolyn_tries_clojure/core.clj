@@ -1,29 +1,24 @@
 (ns carolyn-tries-clojure.core
   (:gen-class))
 
-(print (ns-name *ns*))                                      ;show the current namespace
+(defn format-unit-with-measure
+  "Given a quantity and a unit of measure, format it including accounting for the singular"
+  [quantity unit]
 
-(def hello-world "hello world")                  ;assign a variable
-
-;(print (str hello-world " and good evening"))    ;concatenate 2 strings
-
-(defn format-seconds
-  "Given a number of seconds, display as nice string"
-  [seconds]
-  (cond
-    (= seconds 1) (str seconds " second")
-    :else (str seconds " seconds")
+  (if (= quantity 1)
+    (str quantity " " unit)
+    (str quantity " " unit "s")
     )
   )
 
+(defn format-seconds
+  [seconds]
+  (format-unit-with-measure seconds "second")
+  )
 
 (defn format-minutes
-  "Given a number of minutes, display as nice string"
   [minutes]
-  (cond
-    (= minutes 1) (str minutes " minute")
-    :else (str minutes " minutes")
-    )
+  (format-unit-with-measure minutes "minute")
   )
 
 (defn format-time
@@ -36,7 +31,7 @@
       (= input-seconds 0) "none"
       (<= minutes 0) (format-seconds seconds)
       (<= seconds 0) (format-minutes minutes)
-      :else  (str (format-minutes minutes) " and " (format-seconds seconds))
+      :else (str (format-minutes minutes) " and " (format-seconds seconds))
       )
     )
   )
