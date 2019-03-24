@@ -36,6 +36,10 @@
   (testing "should split into years if > 364 days"
     (is (= (format-time 31626062) "1 year, 1 day, 1 hour, 1 minute and 2 seconds")))
   (testing "should show multiple years as plural"
-    (is (= (format-time 63072000) "2 years"))))
+    (is (= (format-time 63072000) "2 years")))
+
+  (testing "test a random time"
+    (is (= (format-time (+ (* 3 seconds-in-year) (* 15 seconds-in-day) (* 47 seconds-in-minute))) "3 years, 15 days and 47 minutes")))
+  )
 
 (run-tests 'carolyn-tries-clojure.core-test)
