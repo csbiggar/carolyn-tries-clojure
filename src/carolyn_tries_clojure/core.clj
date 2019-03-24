@@ -66,7 +66,6 @@
   )
 
 (defn format-time
-  "Format a time"
   [input-seconds]
   (let [time-unit-components (split-by-time-unit input-seconds)]
     (cond
@@ -75,4 +74,11 @@
       :else (str (str (clojure.string/join ", " (drop-last time-unit-components))) " and " (last time-unit-components))
       )
     )
+  )
+
+(defn -main
+  "Prompt user for some seconds then format them nicely into years, days, hours, minutes & seconds"
+  [& args]
+  (let [string-seconds (do (print "Welcome! Enter seconds to see them beautifully formatted: ") (flush) (read-line))]
+    (println (format-time (Long/parseLong string-seconds))))
   )
