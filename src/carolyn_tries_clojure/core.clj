@@ -10,5 +10,8 @@
 (defn format-time
   "Given a number of seconds, display as nice string"
   [seconds]
-  (str seconds " seconds")
+  (if (= seconds 1)
+    (str seconds " second")
+    (str seconds " seconds")
+    )
   )
