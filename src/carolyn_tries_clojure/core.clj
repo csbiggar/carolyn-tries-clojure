@@ -36,9 +36,11 @@
 
     (cond
       (= input-seconds 0) "none"
-      (= minutes 0) (format-seconds seconds)
-      (= seconds 0) (format-minutes minutes)
-      (= hours 0) (str (format-minutes minutes) " and " (format-seconds seconds))
+      (and (> hours 0) (= minutes 0) (= seconds 0) ) (format-hours hours)
+      (and (= hours 0) (= minutes 0) (> seconds 0)) (format-seconds seconds)
+      (and (= hours 0) (> minutes 0) (= seconds 0)) (format-minutes minutes)
+      (and (> hours 0) (= minutes 0) (> seconds 0)) (str (format-hours hours) " and " (format-seconds seconds))
+      (and (= hours 0) (> minutes 0) (> seconds 0)) (str (format-minutes minutes) " and " (format-seconds seconds))
       :else (str (format-hours hours) ", " (format-minutes minutes) " and " (format-seconds seconds))
       )
     )

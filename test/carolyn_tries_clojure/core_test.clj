@@ -17,6 +17,10 @@
     (is (= (format-time 120) "2 minutes")))
   (testing "should split into hours if > 59 minutes"
     (is (= (format-time 3662) "1 hour, 1 minute and 2 seconds")))
+  (testing "should omit minutes and seconds if a whole number of hours"
+    (is (= (format-time 3600) "1 hour")))
+  (testing "should omit minutes if a time is hours and seconds only"
+    (is (= (format-time 3604) "1 hour and 4 seconds")))
   )
 
 (run-tests 'carolyn-tries-clojure.core-test)
